@@ -49,6 +49,10 @@ message(STATUS "${CMAKE_CXX_FLAGS_RELEASE}")
 
 set( src
 		${PROJECT_SOURCE_DIR}/src/main.cpp
+		${PROJECT_SOURCE_DIR}/src/VideoIO.cpp
+		${PROJECT_SOURCE_DIR}/src/Mesh.cpp
+		${PROJECT_SOURCE_DIR}/src/MeshFlow.cpp
+		${PROJECT_SOURCE_DIR}/src/Fast_klt.cpp
 		)
 
 add_executable( ${CMAKE_PROJECT_NAME} ${src} )
