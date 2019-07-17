@@ -20,6 +20,8 @@ int main(int argc, char **argv) {
     int m_width = m_size.width;
     int m_frameNum = m_frames.size();
 
+    m_frameNum = 40;
+
     vector<cv::Mat> map_X, map_Y;
 
     map_X.resize(m_frameNum - 1);
@@ -33,7 +35,6 @@ int main(int argc, char **argv) {
 
     cout << "MeshFlow starts." << endl;
     for (int i = 1; i < m_frameNum; i++) {
-//        for (int i = 1; i < 10; i++) {
         meshflow.ReInitialize();
         sourceFeatures.clear();
         targetFeatures.clear();
@@ -55,18 +56,19 @@ int main(int argc, char **argv) {
 
         cv::Mat canvas = m_frames[i-1].clone();
 
-        for (int meshVertex_X = 100; meshVertex_X <= 600; meshVertex_X += 100){
-            for (int meshVertex_Y = 100; meshVertex_Y <= 300; meshVertex_Y += 100){
+        for (int meshVertex_X = 40; meshVertex_X < 640; meshVertex_X += 40){
+            for (int meshVertex_Y = 40; meshVertex_Y < 360; meshVertex_Y += 40){
                 cv::arrowedLine(canvas,
-                                cv::Point(meshVertex_X,meshVertex_Y),
-                                cv::Point(meshVertex_X+map_X[i-1].at<float>(meshVertex_X,meshVertex_Y), meshVertex_Y+map_Y[i-1].at<float>(meshVertex_X,meshVertex_Y)),
-                                cv::Scalar(255,0,0),2,8,0,0.6
-                );
+                                cv::Point(meshVertex_X,
+                                          meshVertex_Y),
+                                cv::Point(meshVertex_X + map_X[i-1].at<float>(meshVertex_Y, meshVertex_X),
+                                          meshVertex_Y + map_Y[i-1].at<float>(meshVertex_Y, meshVertex_X)),
+                                cv::Scalar(255,0,0),2,8,0,0.6 );
             }
         }
 
         cv::imshow("MeshFlow", canvas);
-        cv::waitKey(50);
+        cv::waitKey(0);
     }
 
     cv::destroyAllWindows();
